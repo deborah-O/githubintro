@@ -12,6 +12,9 @@ x0 = 50
 import random
 import operator
 import matplotlib.pyplot
+import time
+import agentframework
+
 
 num_of_agents = 10
 num_of_iterations = 100
@@ -252,7 +255,7 @@ y0 = random.randint(0,99)
 
 x0 = random.randint(0,99)
 
-
+start = time.clock()
 agents = [] #Creating an empty list 
 
 agents.append([y0,x0]) # Adding coordinates of 2 lists into another list using 
@@ -297,6 +300,8 @@ m = max(agents, key=operator.itemgetter(1))
 matplotlib.pyplot.scatter(m[1],m[0], color='red')
 matplotlib.pyplot.show()
 
+end = time.clock()
+print("time = " + str(end - start))
 
 #Functions
 
@@ -341,7 +346,7 @@ matplotlib.pyplot.show()
 
 #print(np.arange(1.1, 2.5, 0.2))
 
-#To avoif having to manually create numbers we use
+#To avoid having to manually create numbers we use
 #q = np.linspace(1.0, 20.0, 150)
 #print(q)
 
@@ -421,16 +426,31 @@ for j in range(num_of_iterations):
             agents[i][1] = (agents[i][1] - 1) % 100
 print(agents)
 
-'''
-answer = (((agents[0][0] - agents[1][0])**2) + ((agents[0][1] - agents[1][1])**2))**0.5
-print(answer)
-''' 
+#Defining the functions
+def distance_between(agents_row_a, agents_row_b):
+        distance_between = (((agents_row_a[0] - agents_row_b[0])**2) + ((agents_row_a[1] - agents_row_b[1])**2))**0.5
+        return distance_between
+ 
+for k in range(num_of_agents):
+    for i in range(num_of_agents):
+       print(distance_between(agents[k], agents[i]))
 
+
+
+#Plotting agents
 matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
 for i in range(num_of_agents):
   matplotlib.pyplot.scatter(agents[i][1],agents[i][0])
 matplotlib.pyplot.show()
+
+#Creating the class
+ 
+a = agentframework.Agent(1,2)
+print(a.columny, a.columnx)
+a.movement()
+print(a.columny, a.columnx)
+
 
 #Classes
 # def gcd (a,b):
@@ -460,10 +480,156 @@ matplotlib.pyplot.show()
 #        b = se;f.__d * rhs.getDenominator()
 #        return Rational(a,b)
 
+#Object for printing
 #   def _repr_(self):
 #       str = '%d' % self.__n
 #       str = str + '/'
 #       str = str + '%d' % self.__d
 #       return str 
 
-#
+#Jitse Nieson - j.nieson@leeds.ac.uk (Day 3)
+
+#class Person:
+    # def __init__(object, attributes):
+    # def __init__(self) - object is always named self
+    # Our example, the attributes are Money and Happiness
+    
+    #def __init__(self, money, happiness):
+        #self.money = money
+        #self.happiness = happiness
+    # To run this, we create our person
+    # Debbie = Person(100, 10) - just type Debbie in the console
+    #This is not insightful, so we will create a method which are objects.append
+    #i.e. numbers = [2, 5, 10]
+    #i.e. numbers.append(20) - append adds values or charaters to the list
+    
+    #To return to our person class, we'll add a method
+    # with two assumptions: Working increases money, but happiness reduces
+   
+    #def work(self):
+        #self.money = self.money + 10
+        #self.happiness = self.happiness - 5
+        
+    #Run the class once more
+    #Debbie = Person(100, 10) 
+    #Two ways of printing now
+    #print("Debbie's money:", Debbie.money) -Old way
+    #print(f" Debbie's money = {Debbie.money},"
+         #(f" Debbie's happiness= {Debbie.happiness},"
+           
+    # def consume(self):
+        #'''Consumption decreases money, increases happiness'''
+        #self.happiness += 7
+        #self.money -= 8
+        #Debbie.consume()
+    
+    #A new way to represent our class, printing
+    #def __repr__(self):
+        #return (f"A personn with money = {self.money} "
+                #f" and happiness = {self.happiness}" )
+        
+    #To make things interesting, we will add an interaction between agents
+    #def interact(self, other):
+        #'''Interact with another person; increases happiness for both'''
+        #self.happiness += 1
+        #other.happiness += 1
+        
+    #Create another person to interact with
+    #rob.person(500, 5)
+    #rob.interact(Debbie)
+    #Print('After interaction:')
+    #print(Debbie)
+    #print(rob)
+    
+#Input and Output (I/O)
+
+#result = input('Say something') 
+
+#A string and a number(int) cannot not be added together
+
+#To open an external file in python, there are two processes
+
+#my_file = open('hi.txt,'w')
+#my_file.write('Oh hello') - the results will simply be count of charaters 
+#my_file.close() - to stop writing
+
+#If we do not allovate a specific place to save the document
+#it will save in the m drive or default area in searchbar 
+#file_for_reading = open('hi.txt', r) - if we dont allocate an command,
+#it automatically reads the file
+
+#text_in_file = file_for_reading.read()
+#print(text_in_file)
+#file_for_readng.close()
+
+
+#To import a file that we have full of data 
+#file_for_reading = open('hi.txt', r)
+#text_in_file = file_for_reading.read()
+#file_for_readng.close()
+#print(text_in_file)
+
+
+#open files this way, to avoid forgetting to close files ->
+# with open('hi.txt', r) as file_for_reading:
+      #text_in_file =  file_for_reading.read()
+#print(text_in_file) - ensure the file directory is in the same place as program
+
+#To read files line by line
+#with open('hi.txt', r) as file_for_reading:
+   #for line in file_for_reading:
+       #print ('I read a line and it is: ', repr(line))
+       
+#Split the words
+#with open('hi.txt', r) as file_for_reading:
+   #for line in file_for_reading:
+       #words = line.split()
+       #print('I read the line and it is:  ',repr(words))
+       
+#Construct persons
+#with open('hi.txt', r) as file_for_reading:
+   #for line in file_for_reading:
+       #words = line.split()
+       #money = int(words[0])
+       #happiness = int(words[1])
+       #person = Person(money, happiness)
+       #print('I read the line and I created this person:  ',person)
+       
+#def read_persons_from_file(filename):
+    #'''return a list of persons. File should be a text file with two numbers
+    #seperated by space on each line'''
+    
+    #persons = []
+        
+    #with open(filename, r) as file_for_reading:
+        #for line in file_for_reading:
+            #words = line.split()
+            #money = int(words[0])
+            #happiness = int(words[1])
+            #person = Person(money, happiness)
+            #persons.append(person)
+    #return persons
+    
+#Read data from file and let everybody work
+#person_list = read_persons_from_file('agent-data.txt')
+#for person in person_list:
+    #person.work()
+
+
+#Also some things that are good about R about reading files
+#Are in pandas, simply import it at the beginning of the code
+
+#To read data that is numerical, use numpy with is also imported into the code
+#numpy.loadtxt('agent-data.txt')
+
+#To write into the file
+#def write_persons_to_file(filename, persons):
+    #'''Save a list of Person to file so that it can be read by read_persons_from_file'''
+    #with open(filename, w) as file_for_writing:
+        #for person in persons:
+         #-> we need to make strings to return the values to the file
+         #s = f'{person.money} {person.happiness}'
+         #file_for_writing.write(s)
+    
+#write_persons_to_file('workieworkie.txt', person_list\n)
+
